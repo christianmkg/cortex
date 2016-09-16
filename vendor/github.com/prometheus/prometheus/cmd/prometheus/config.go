@@ -43,8 +43,6 @@ var cfg = struct {
 	printVersion bool
 	configFile   string
 
-	retrievalOnly bool
-
 	storage     local.MemorySeriesStorageOptions
 	notifier    notifier.Options
 	queryEngine promql.EngineOptions
@@ -72,12 +70,6 @@ func init() {
 	cfg.fs.StringVar(
 		&cfg.configFile, "config.file", "prometheus.yml",
 		"Prometheus configuration file name.",
-	)
-
-	// Retrieval-only mode.
-	cfg.fs.BoolVar(
-		&cfg.retrievalOnly, "retrieval-only", false,
-		"Whether to run in retrieval-only mode.",
 	)
 
 	// Web.
@@ -215,8 +207,8 @@ func init() {
 		"The name of the database to use for storing samples in InfluxDB.",
 	)
 	cfg.fs.StringVar(
-		&cfg.remote.Address, "experimental.storage.remote.address", "",
-		"The address of the remote server to send samples to. None, if empty. EXPERIMENTAL.",
+		&cfg.remote.URL, "experimental.storage.remote.url", "",
+		"The URL of the remote endpoint to send samples to. None, if empty. EXPERIMENTAL.",
 	)
 
 	cfg.fs.DurationVar(
